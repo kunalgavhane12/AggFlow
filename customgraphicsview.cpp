@@ -15,6 +15,7 @@
 
 CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
+    , currentItem(nullptr)
     , scene(new QGraphicsScene(this))
     , currentLine(nullptr)
     , UndoStack(new QUndoStack(this))
@@ -22,8 +23,9 @@ CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     setScene(scene);
     setAcceptDrops(true);
     setRenderHints(QPainter::HighQualityAntialiasing);
-    scene->setSceneRect(0, 0,600,400);
-
+    scene->setSceneRect(0, 0,parent->width(),parent->height());
+    setMouseTracking(true);
+    //    setFlag(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     acnSave = new QAction(tr("Save Not Yet Implemented"), this);
     acnDel = new QAction(tr("Delete line"), this);
     acnSetVal = new QAction(tr("Set value"), this);
@@ -98,15 +100,80 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent *event)
         emit PublishNewData(QString("(%1, %2)").arg(scenePos.x()).arg(scenePos.y()));
     }
 
+    startPoint = scenePos;
+
+    switch (currentMode) {
+    case ArrowMode:
+        currentItem = new QGraphicsLineItem(QLineF(startPoint, startPoint));
+        break;
+    case LineMode:
+        currentItem = new QGraphicsLineItem(QLineF(startPoint, startPoint));
+        break;
+    case PolylineMode:
+        break;
+    case EllipseMode:
+        currentItem = new QGraphicsEllipseItem(QRectF(startPoint, QSizeF(0, 0)));
+        break;
+    case RectangleMode:
+        currentItem = new QGraphicsRectItem(QRectF(startPoint, QSizeF(0, 0)));
+        break;
+    default:
+        QGraphicsView::mousePressEvent(event);
+        return;
+    }
+    if (currentItem)
+    {
+        scene->addItem(currentItem);
+    }
+
     QGraphicsView::mousePressEvent(event);
 }
 
 void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
+    if (!currentItem) {
+        QGraphicsView::mouseMoveEvent(event);
+        return;
+    }
+
+    QPointF endPoint = mapToScene(event->pos());
+
     if (currentLine)
     {
         QLineF newLine(lineStartPoint, mapToScene(event->pos()));
         currentLine->setLine(newLine);
+    }
+
+    switch (currentMode) {
+    case ArrowMode:
+    case LineMode: {
+        QGraphicsLineItem *line = qgraphicsitem_cast<QGraphicsLineItem *>(currentItem);
+        if (line) {
+            line->setLine(QLineF(startPoint, endPoint));
+        }
+        break;
+    }
+    case EllipseMode:{
+        QGraphicsEllipseItem *ellips = qgraphicsitem_cast<QGraphicsEllipseItem *>(currentItem);
+        if (ellips) {
+            QRectF rectF(startPoint, endPoint);
+            ellips->setRect(rectF);
+        }
+        break;
+    }
+    case RectangleMode: {
+        QGraphicsRectItem *rect = qgraphicsitem_cast<QGraphicsRectItem *>(currentItem);
+        if (rect) {
+            QRectF rectF(startPoint, endPoint);
+            rect->setRect(rectF);
+        }
+        break;
+    }
+    case PolylineMode:
+        break;
+    default:
+        QGraphicsView::mouseMoveEvent(event);
+        break;
     }
 
     update();
@@ -115,15 +182,15 @@ void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
 
 void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 {
+    QPointF scenePos = mapToScene(event->pos());
     if (currentLine)
     {
         lineConnections[currentLine].first->parentItem()->setFlag(QGraphicsItem::ItemIsMovable, true);
-
         QPointF scenePos = mapToScene(event->pos());
         QList<QGraphicsItem *>items = scene->items(scenePos);
 
         bool lineDrawn = false;
-        for(auto item:items)
+        for(auto item: items)
         {
             auto test = dynamic_cast<QGraphicsEllipseItem *>(item);
             if (item && test)
@@ -151,11 +218,17 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 
         currentLine = nullptr;
     }
+    else if(currentItem)
+    {
+        currentItem->setFlag(QGraphicsItem::ItemIsMovable, true);
+        currentItem->setFlag(QGraphicsItem::ItemIsSelectable, true);
+        currentItem = nullptr;
+        currentMode = None;
+    }
     else
     {
-        QPointF scenePos = mapToScene(event->pos());
         QList<QGraphicsItem *>items = scene->items(scenePos);
-        for(QGraphicsItem *itm:items)
+        for(QGraphicsItem *itm: items)
         {
             CustomPixmapItem *cpItm = dynamic_cast<CustomPixmapItem *>(itm);
             if(cpItm)
@@ -169,6 +242,9 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 
     QGraphicsView::mouseReleaseEvent(event);
 }
+
+
+
 
 void CustomGraphicsView::mouseDoubleClickEvent(QMouseEvent *event)
 {

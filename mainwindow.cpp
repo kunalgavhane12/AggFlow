@@ -12,6 +12,9 @@
 #include <QToolBar>
 #include <QGroupBox>
 #include <QPushButton>
+#include <QColorDialog>
+#include <QInputDialog>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     , status(new QLabel(this))
     , currentFile("saveTest.scene")
     , zoomFactor(1.5)
+    , drawing(false)
 {
     SetupUI();
     createActions();
@@ -128,10 +132,11 @@ void MainWindow::SetupUI()
     listView->setIconSize(QSize(40, 40));
     listView->setItemDelegate(delegate);
     listView->setDragEnabled(true);
-    tabPlant->addTab(tabPage, tr("Plant Stage"));
-    tabPage->addTab(graphicsView, tr("Page"));
-    tabPlant->setTabsClosable(true);
-    tabPage->setTabsClosable(true);
+    createTabs();
+    //    tabPlant->addTab(tabPage, tr("Plant Stage"));
+    //    tabPage->addTab(graphicsView, tr("Page"));
+    //    tabPlant->setTabsClosable(true);
+    //    tabPage->setTabsClosable(true);
 
     QHBoxLayout *hlayout = new QHBoxLayout(centralWidget);
 
@@ -144,6 +149,14 @@ void MainWindow::SetupUI()
     setMinimumSize(800, 650);
     statusBar();
 }
+void MainWindow::createTabs()
+{
+    tabPlant->addTab(tabPage, tr("Plant Stage #1"));
+    tabPage->addTab(graphicsView, tr("Page #1"));
+    tabPlant->setTabsClosable(true);
+    tabPage->setTabsClosable(true);
+}
+
 
 void MainWindow::onItemClicked(int index)
 {
@@ -179,6 +192,9 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/place_a_surge_bin_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/bucket_elevator.png"),
                      QIcon(":/icons/dragIcon/screw_conveyor.png")};
+        connect(listView, &QListView::clicked, [this](const QModelIndex &index) {
+            onDrawingModeSelected(index.row());
+        });
         break;
     case 3:
         menuIcons = {QIcon(":/icons/dragIcon/place_a_splitter_in_the_flow.png"),
@@ -270,6 +286,9 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/ellipse.png"),
                      QIcon(":/icons/dragIcon/rectangle.png"),
                      QIcon(":/icons/dragIcon/symbols_open_to_select_model.png")};
+        connect(listView, &QListView::clicked, [this](const QModelIndex &index) {
+            onDrawingModeSelected(index.row());
+        });
         break;
     default:
         menuIcons = {QIcon()};
@@ -662,6 +681,7 @@ void MainWindow::createActions()
     connect(graphicsView, &CustomGraphicsView::PublishUndoData, this, &MainWindow::onUndoPos);
     connect(graphicsView, &CustomGraphicsView::PublishRedoData, this, &MainWindow::onRedoPos);
     connect(graphicsView, &CustomGraphicsView::resultUpdated, this, &MainWindow::updateResult);
+    connect(deleteAction, &QAction::triggered, graphicsView, &CustomGraphicsView::onActionDelete);
     connect(tabPlant, &QTabWidget::tabBarClicked, this, &MainWindow::addNewPlantTab);
     connect(tabPlant, &QTabWidget::tabCloseRequested, this, &MainWindow::closePlantTab);
     connect(tabPage, &QTabWidget::tabBarClicked, this, &MainWindow::addNewPageTab);
@@ -707,6 +727,51 @@ void MainWindow::setCurrentFile(const QString &fileName)
     currentFile = fileName;
     setWindowModified(false);
     setWindowFilePath(currentFile.isEmpty() ? tr("untitled.xml") : currentFile);
+}
+
+void MainWindow::onDrawingModeSelected(int mode) {
+
+    switch (mode) {
+    case 0:
+        qDebug() << "default mouse function";
+        break;
+    case 1:
+        //set paint brush color for change item b/w to color in graphicview
+        qDebug() << "paint brush";
+        break;
+    case 2:
+        //choose color for brush for change item color in graphicview
+        QColorDialog::getColor();
+        qDebug() << "brush paint color";
+        break;
+    case 3:
+        //set paint brush B/W for change item color to b/w in graphicview
+        qDebug() << "erase color";
+        break;
+    case 4:
+        //open dialog box and take multi line text input in that and paste in graphicview
+        qDebug() << "Multiline note";
+        break;
+    case 5:
+        //open dialog box and take signle line text input in that and paste in graphicview
+        qDebug() << "adjustable text ";
+        break;
+    case 6:
+        graphicsView->setDrawingMode(CustomGraphicsView::ArrowMode);
+        break;
+    case 7:
+        graphicsView->setDrawingMode(CustomGraphicsView::LineMode);
+        break;
+    case 8:
+        graphicsView->setDrawingMode(CustomGraphicsView::PolylineMode);
+        break;
+    case 9:
+        graphicsView->setDrawingMode(CustomGraphicsView::EllipseMode);
+        break;
+    case 10:
+        graphicsView->setDrawingMode(CustomGraphicsView::RectangleMode);
+        break;
+    }
 }
 
 void MainWindow::onSave()
@@ -794,7 +859,7 @@ void MainWindow::addNewPlantTab(int index)
         QTabWidget *newTab = new QTabWidget();
         QVBoxLayout *layout = new QVBoxLayout(newTab);
         layout->addWidget(newTab);
-        tabPlant->addTab(newTab, tr("Page plant #%1").arg(tabPlant->count()));
+        tabPlant->addTab(newTab, tr("Page plant #%1").arg(tabPlant->count()+1));
     }
 }
 void MainWindow::addNewPageTab(int index)
@@ -804,7 +869,7 @@ void MainWindow::addNewPageTab(int index)
         CustomGraphicsView *graphicsView = (new CustomGraphicsView(this));
         QVBoxLayout *layout = new QVBoxLayout(graphicsView);
         layout->addWidget(graphicsView);
-        tabPage->addTab(graphicsView, tr("Page #%1").arg(tabPage->count()));
+        tabPage->addTab(graphicsView, tr("Page #%1").arg(tabPage->count()+1));
     }
 }
 

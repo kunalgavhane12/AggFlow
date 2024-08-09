@@ -6,6 +6,7 @@
 #include "CustomGraphicsView.h"
 #include <customdelegate.h>
 #include <QPushButton>
+#include <QDebug>
 
 class MainWindow : public QMainWindow
 {
@@ -36,11 +37,13 @@ private slots:
 
 private:
     void SetupUI();
+    void createTabs();
     void onItemClicked(int index);
     void createMenus();
     void createActions();
     void createToolbar();
     void setCurrentFile(const QString &fileName);
+    void onDrawingModeSelected(int mode);
 
     QWidget *centralWidget;
     QTabWidget *tabPlant;
@@ -141,6 +144,7 @@ private:
     QAction *about;
     QString currentFile;
     qreal zoomFactor;
+    bool drawing;
 };
 
 #endif // MAINWINDOW_H
