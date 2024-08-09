@@ -1,22 +1,8 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>images/tractor_black.png</file>
-        <file>images/tractor_ok.png</file>
-        <file>images/tractor_On_Field.png</file>
-        <file>images/tractor_orange.png</file>
-        <file>images/tractor_red.png</file>
-        <file>images/tractor_transperant.png</file>
-        <file>images/tractor_yellow.png</file>
         <file>images/start_point.png</file>
-        <file>images/add_file.png</file>
         <file>images/loading.png</file>
         <file>images/paste.png</file>
-        <file>images/redo.png</file>
-        <file>images/save.png</file>
-        <file>images/save_as.png</file>
-        <file>images/undo.png</file>
-        <file>images/zoom_in.png</file>
-        <file>images/zoom_out.png</file>
         <file>images/zoom_to_fit.PNG</file>
         <file>images/clean_Water_Equipment.png</file>
         <file>images/crushing_Equipment.png</file>
@@ -31,7 +17,6 @@
         <file>images/in_line_Equipment.png</file>
         <file>images/power_Sources_and_Auxiliary_Equipment.png</file>
         <file>images/spiltters_and_flop_gates.png</file>
-        <file>images/folder-open.svg</file>
         <file>dragIcon/1deck.png</file>
         <file>dragIcon/2deck.png</file>
         <file>dragIcon/3deck.png</file>
