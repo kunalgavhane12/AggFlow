@@ -16,7 +16,6 @@ SOURCES += \
     custompixmapitem.cpp \
     main.cpp \
     mainwindow.cpp
-
 HEADERS += \
     addcommand.h \
     arrowlineitem.h \
@@ -35,3 +34,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     images.qrc
+

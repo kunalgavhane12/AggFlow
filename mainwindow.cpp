@@ -14,7 +14,6 @@
 #include <QPushButton>
 #include <QColorDialog>
 #include <QInputDialog>
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,12 +30,12 @@ MainWindow::MainWindow(QWidget *parent)
     , status(new QLabel(this))
     , currentFile("saveTest.scene")
     , zoomFactor(1.5)
-    , drawing(false)
 {
     SetupUI();
     createActions();
     createMenus();
     createToolbar();
+    setFixedSize(800,600);
 
     runAction = new QAction("Run", this);
     menuBar()->addAction(runAction);
@@ -192,9 +191,9 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/place_a_surge_bin_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/bucket_elevator.png"),
                      QIcon(":/icons/dragIcon/screw_conveyor.png")};
-        connect(listView, &QListView::clicked, [this](const QModelIndex &index) {
-            onDrawingModeSelected(index.row());
-        });
+//        connect(listView, &QListView::clicked, [this](const QModelIndex &index) {
+//            onDrawingModeSelected(index.row());
+//        });
         break;
     case 3:
         menuIcons = {QIcon(":/icons/dragIcon/place_a_splitter_in_the_flow.png"),
@@ -305,7 +304,7 @@ void MainWindow::onItemClicked(int index)
     listView->setIconSize(QSize(40, 40));
     listView->setItemDelegate(delegate);
     listView->setDragEnabled(true);
-    listView->setFixedWidth(50);
+    listView->setFixedWidth(70);
 }
 
 void MainWindow::createMenus()
@@ -446,12 +445,10 @@ void MainWindow::createMenus()
     helpMenu->addAction(aggFlowLicense);
     helpMenu->addSeparator();
     helpMenu->addAction(about);
-
 }
 
 void MainWindow::createActions()
 {
-
     saveAction = new QAction(tr("&Save Revision"), this);
     saveAction->setShortcuts(QKeySequence::Save);
     saveAction->setStatusTip(tr("Ctrl+S"));
@@ -681,7 +678,6 @@ void MainWindow::createActions()
     connect(graphicsView, &CustomGraphicsView::PublishUndoData, this, &MainWindow::onUndoPos);
     connect(graphicsView, &CustomGraphicsView::PublishRedoData, this, &MainWindow::onRedoPos);
     connect(graphicsView, &CustomGraphicsView::resultUpdated, this, &MainWindow::updateResult);
-    connect(deleteAction, &QAction::triggered, graphicsView, &CustomGraphicsView::onActionDelete);
     connect(tabPlant, &QTabWidget::tabBarClicked, this, &MainWindow::addNewPlantTab);
     connect(tabPlant, &QTabWidget::tabCloseRequested, this, &MainWindow::closePlantTab);
     connect(tabPage, &QTabWidget::tabBarClicked, this, &MainWindow::addNewPageTab);
@@ -730,7 +726,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
 }
 
 void MainWindow::onDrawingModeSelected(int mode) {
-
+    listView->setDragEnabled(false);
     switch (mode) {
     case 0:
         qDebug() << "default mouse function";
@@ -761,6 +757,7 @@ void MainWindow::onDrawingModeSelected(int mode) {
         break;
     case 7:
         graphicsView->setDrawingMode(CustomGraphicsView::LineMode);
+        qDebug() << "line";
         break;
     case 8:
         graphicsView->setDrawingMode(CustomGraphicsView::PolylineMode);
@@ -770,6 +767,9 @@ void MainWindow::onDrawingModeSelected(int mode) {
         break;
     case 10:
         graphicsView->setDrawingMode(CustomGraphicsView::RectangleMode);
+        break;
+    default:
+        listView->setDragEnabled(true);
         break;
     }
 }

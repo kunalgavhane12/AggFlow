@@ -6,26 +6,1365 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>672</width>
-    <height>428</height>
+    <width>800</width>
+    <height>629</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/start_point.png</normaloff>:/icons/images/start_point.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="autoRepeat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/in_line_Equipment.png</normaloff>:/icons/images/in_line_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/transport_Equipment.png</normaloff>:/icons/images/transport_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_4">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/spiltters_and_flop_gates.png</normaloff>:/icons/images/spiltters_and_flop_gates.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_5">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/crushing_Equipment.png</normaloff>:/icons/images/crushing_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_6">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/screening_Equipment.png</normaloff>:/icons/images/screening_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_7">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/mobile_Equipment.png</normaloff>:/icons/images/mobile_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_8">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/wash_Equipment.png</normaloff>:/icons/images/wash_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_10">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/inventory_(temporary storage).png</normaloff>:/icons/images/inventory_(temporary storage).png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_9">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/end_Products.png</normaloff>:/icons/images/end_Products.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_12">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/clean_Water_Equipment.png</normaloff>:/icons/images/clean_Water_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_14">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/measurement_Equipment.png</normaloff>:/icons/images/measurement_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_13">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/power_Sources_and_Auxiliary_Equipment.png</normaloff>:/icons/images/power_Sources_and_Auxiliary_Equipment.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_11">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="images.qrc">
+              <normaloff>:/icons/images/notes_Coloring_and_Drawing.png</normaloff>:/icons/images/notes_Coloring_and_Drawing.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="title">
+       <string>GroupBox</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Plant Stage #1</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_3">
+           <attribute name="title">
+            <string>Page #1</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QGraphicsView" name="graphicsView"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_4">
+           <attribute name="title">
+            <string>+ Page</string>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>+ Stage</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>672</width>
+     <width>800</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="menuExport_to_PDF_JPEG_or_TIFF">
+     <property name="title">
+      <string>Export to PDF, JPEG or TIFF</string>
+     </property>
+     <addaction name="actionPage_to_PDF"/>
+     <addaction name="actionPage_to_EPS"/>
+     <addaction name="actionPage_with_Result_to_EPS"/>
+     <addaction name="actionPage_to_JPEG"/>
+     <addaction name="actionPage_to_TIFF_Color_big"/>
+     <addaction name="actionPage_to_TIFF_B_W_small"/>
+     <addaction name="separator"/>
+     <addaction name="actionPlant_to_PDF"/>
+     <addaction name="actionPlant_with_Result_to_PDF"/>
+     <addaction name="actionPlant_to_EPS"/>
+     <addaction name="actionPlant_with_Result_to_EPS"/>
+    </widget>
+    <addaction name="action_Save_Revision"/>
+    <addaction name="action_Save_as_Master"/>
+    <addaction name="actionSave_as_New"/>
+    <addaction name="separator"/>
+    <addaction name="action_Open_Revision_From_File"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_Control_Panel"/>
+    <addaction name="actionManage_User_Access_To_This_Project"/>
+    <addaction name="separator"/>
+    <addaction name="actionPrint_this_Page"/>
+    <addaction name="actionPrint_All_Page"/>
+    <addaction name="menuExport_to_PDF_JPEG_or_TIFF"/>
+    <addaction name="separator"/>
+    <addaction name="actionSet_Title_and_Print_Options_2"/>
+    <addaction name="actionSet_User_Preferences"/>
+    <addaction name="separator"/>
+    <addaction name="action_Close_This_Project"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <widget class="QMenu" name="menuAlign">
+     <property name="title">
+      <string>Align</string>
+     </property>
+     <property name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/icons/images/algin.png</normaloff>:/icons/images/algin.png</iconset>
+     </property>
+     <addaction name="action_Top"/>
+     <addaction name="action_Bottom"/>
+     <addaction name="action_Left"/>
+     <addaction name="action_Right"/>
+    </widget>
+    <widget class="QMenu" name="menuDistribute">
+     <property name="title">
+      <string>Distribute</string>
+     </property>
+     <property name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/icons/images/distribute.png</normaloff>:/icons/images/distribute.png</iconset>
+     </property>
+     <addaction name="actionVertical_by_Center"/>
+     <addaction name="actionHorizontal_by_Center"/>
+    </widget>
+    <addaction name="action_Graphical_Undo"/>
+    <addaction name="separator"/>
+    <addaction name="action_Copy"/>
+    <addaction name="action_Cut"/>
+    <addaction name="action_Paste"/>
+    <addaction name="action_Delete"/>
+    <addaction name="separator"/>
+    <addaction name="action_Select_All"/>
+    <addaction name="separator"/>
+    <addaction name="menuAlign"/>
+    <addaction name="menuDistribute"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <widget class="QMenu" name="menuUnits">
+     <property name="title">
+      <string>Units</string>
+     </property>
+     <property name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/icons/images/units.png</normaloff>:/icons/images/units.png</iconset>
+     </property>
+     <addaction name="action_Metric"/>
+     <addaction name="action_Imperial"/>
+    </widget>
+    <addaction name="action_Refresh"/>
+    <addaction name="separator"/>
+    <addaction name="actionZoom_In"/>
+    <addaction name="actionZoom_Out"/>
+    <addaction name="actionZoom_to_Normal"/>
+    <addaction name="actionZoom_to_Fit"/>
+    <addaction name="separator"/>
+    <addaction name="actionDraw_O_rthogonal_Flow_Streams"/>
+    <addaction name="separator"/>
+    <addaction name="menuUnits"/>
+    <addaction name="separator"/>
+    <addaction name="action_Display_Clean_Water_Equipment"/>
+    <addaction name="action_Display_Toolbar"/>
+    <addaction name="action_Display_Tool_Tips"/>
+   </widget>
+   <widget class="QMenu" name="menuRun">
+    <property name="title">
+     <string>&amp;Run</string>
+    </property>
+    <addaction name="actionRun_Stage"/>
+    <addaction name="separator"/>
+    <addaction name="actionRun_Plant"/>
+    <addaction name="separator"/>
+    <addaction name="actionTurn_Off_All_Red_Flags"/>
+    <addaction name="action_Open_Configuration_Advisor"/>
+   </widget>
+   <widget class="QMenu" name="menuOperating_Modes">
+    <property name="title">
+     <string>Operating Modes</string>
+    </property>
+    <addaction name="actionAdd_New_Operating_Mode"/>
+    <addaction name="separator"/>
+    <addaction name="actionManage_Operating_Mode"/>
+    <addaction name="separator"/>
+    <addaction name="actionMode_Report"/>
+    <addaction name="separator"/>
+    <addaction name="actionMode_Differences_Report"/>
+    <addaction name="separator"/>
+    <addaction name="actionDelete_All_Operating_Mode"/>
+    <addaction name="separator"/>
+    <addaction name="actionWhat_are_Operating_Modes"/>
+   </widget>
+   <widget class="QMenu" name="menuDatabase">
+    <property name="title">
+     <string>&amp;Database</string>
+    </property>
+    <addaction name="actionView_All_Crushers"/>
+    <addaction name="actionView_Edit_Specifications"/>
+    <addaction name="actionView_Edit_Emission_Tables"/>
+    <addaction name="separator"/>
+    <addaction name="actionView_Screen_Size_Conversion_Table"/>
+    <addaction name="actionImport_Data_From_Previous_Version"/>
+    <addaction name="separator"/>
+    <addaction name="actionManage_Attachments"/>
+   </widget>
+   <widget class="QMenu" name="menuReports">
+    <property name="title">
+     <string>Re&amp;ports</string>
+    </property>
+    <addaction name="actionCreate_Report_for_Selected_Item_s"/>
+    <addaction name="actionCreate_Report_For_All_Items_on_Worksheet"/>
+    <addaction name="separator"/>
+    <addaction name="actionCreate_Emission_Report_for_Selected_Item_s"/>
+    <addaction name="actionCreate_Emission_Report_for_All_Items_on_the_Worksheet"/>
+    <addaction name="separator"/>
+    <addaction name="actionSet_Title_and_Print_Options"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>&amp;Window</string>
+    </property>
+    <addaction name="actionRe_fresh_All"/>
+    <addaction name="action_Collapse_All"/>
+    <addaction name="action_Restore_All"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionOpen_Help_System"/>
+    <addaction name="separator"/>
+    <addaction name="actionGet_AggFlow_Updates"/>
+    <addaction name="separator"/>
+    <addaction name="actionRequest_Support"/>
+    <addaction name="actionSend_Suggestions_To_AggFlow"/>
+    <addaction name="separator"/>
+    <addaction name="actionAggFlow_Disclaimer"/>
+    <addaction name="actionAggFlow_License_Agreement"/>
+    <addaction name="separator"/>
+    <addaction name="action_About"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuRun"/>
+   <addaction name="menuOperating_Modes"/>
+   <addaction name="menuDatabase"/>
+   <addaction name="menuReports"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_Save_Revision"/>
+   <addaction name="separator"/>
+   <addaction name="actionOpen_Control_Panel"/>
+   <addaction name="separator"/>
+   <addaction name="actionRun_Stage"/>
+   <addaction name="actionRun_Plant"/>
+   <addaction name="separator"/>
+   <addaction name="actionTurn_Off_All_Red_Flags"/>
+   <addaction name="separator"/>
+   <addaction name="action_Graphical_Undo"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoom_In"/>
+   <addaction name="actionZoom_Out"/>
+   <addaction name="actionZoom_to_Normal"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoom_to_Fit"/>
+   <addaction name="actionDraw_O_rthogonal_Flow_Streams"/>
+   <addaction name="separator"/>
+   <addaction name="action_Display_Clean_Water_Equipment"/>
+   <addaction name="separator"/>
+   <addaction name="actionOpen_Help_System"/>
+   <addaction name="separator"/>
+  </widget>
+  <action name="action_Save_Revision">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/save_revision.png</normaloff>:/icons/images/save_revision.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save Revision</string>
+   </property>
+  </action>
+  <action name="actionOpen_Help_System">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/openHelp.png</normaloff>:/icons/images/openHelp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Help System</string>
+   </property>
+  </action>
+  <action name="actionGet_AggFlow_Updates">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/getUpdate.png</normaloff>:/icons/images/getUpdate.png</iconset>
+   </property>
+   <property name="text">
+    <string>Get AggFlow Updates</string>
+   </property>
+  </action>
+  <action name="actionRequest_Support">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/requestSupport.png</normaloff>:/icons/images/requestSupport.png</iconset>
+   </property>
+   <property name="text">
+    <string>Request Support</string>
+   </property>
+  </action>
+  <action name="actionSend_Suggestions_To_AggFlow">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/sendSuggestion.png</normaloff>:/icons/images/sendSuggestion.png</iconset>
+   </property>
+   <property name="text">
+    <string>Send &amp;Suggestions To AggFlow</string>
+   </property>
+  </action>
+  <action name="actionAggFlow_Disclaimer">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/disclaimer.png</normaloff>:/icons/images/disclaimer.png</iconset>
+   </property>
+   <property name="text">
+    <string>AggFlow Disclaimer</string>
+   </property>
+  </action>
+  <action name="actionAggFlow_License_Agreement">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/liencseAggrement.png</normaloff>:/icons/images/liencseAggrement.png</iconset>
+   </property>
+   <property name="text">
+    <string>AggFlow License Agreement</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/about.png</normaloff>:/icons/images/about.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionRe_fresh_All">
+   <property name="text">
+    <string>Re&amp;fresh All</string>
+   </property>
+  </action>
+  <action name="action_Collapse_All">
+   <property name="text">
+    <string>&amp;Collapse All</string>
+   </property>
+  </action>
+  <action name="action_Restore_All">
+   <property name="text">
+    <string>&amp;Restore All</string>
+   </property>
+  </action>
+  <action name="actionCreate_Report_for_Selected_Item_s">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/reportSelectItem.png</normaloff>:/icons/images/reportSelectItem.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create Report for Selected Item(s)</string>
+   </property>
+  </action>
+  <action name="actionCreate_Report_For_All_Items_on_Worksheet">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/reportallItem.png</normaloff>:/icons/images/reportallItem.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create Report For &amp;All Items on Worksheet</string>
+   </property>
+  </action>
+  <action name="actionCreate_Emission_Report_for_Selected_Item_s">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/reportEmission.png</normaloff>:/icons/images/reportEmission.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create &amp;Emission Report for Selected Item(s)</string>
+   </property>
+  </action>
+  <action name="actionCreate_Emission_Report_for_All_Items_on_the_Worksheet">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/reportEmissionall.png</normaloff>:/icons/images/reportEmissionall.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create Emission Report for All Items on the Worksheet</string>
+   </property>
+  </action>
+  <action name="actionSet_Title_and_Print_Options">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/setTitle_print_option.png</normaloff>:/icons/images/setTitle_print_option.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set Title and Print Options</string>
+   </property>
+  </action>
+  <action name="actionView_All_Crushers">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/viewallcrusher.png</normaloff>:/icons/images/viewallcrusher.png</iconset>
+   </property>
+   <property name="text">
+    <string>View All Crushers</string>
+   </property>
+  </action>
+  <action name="actionView_Edit_Specifications">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/view_edit_specifications.png</normaloff>:/icons/images/view_edit_specifications.png</iconset>
+   </property>
+   <property name="text">
+    <string>View/Edit Specifications...</string>
+   </property>
+  </action>
+  <action name="actionView_Edit_Emission_Tables">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/view_edit_emission_table.png</normaloff>:/icons/images/view_edit_emission_table.png</iconset>
+   </property>
+   <property name="text">
+    <string>View/Edit Emission Tables...</string>
+   </property>
+  </action>
+  <action name="actionView_Screen_Size_Conversion_Table">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/view_screen_size.png</normaloff>:/icons/images/view_screen_size.png</iconset>
+   </property>
+   <property name="text">
+    <string>View Screen Size Conversion &amp;Table...</string>
+   </property>
+  </action>
+  <action name="actionImport_Data_From_Previous_Version">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/import_data_previous.png</normaloff>:/icons/images/import_data_previous.png</iconset>
+   </property>
+   <property name="text">
+    <string>Import Data From Previous Version</string>
+   </property>
+  </action>
+  <action name="actionManage_Attachments">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/manage_attchements.png</normaloff>:/icons/images/manage_attchements.png</iconset>
+   </property>
+   <property name="text">
+    <string>Manage Attachments</string>
+   </property>
+  </action>
+  <action name="actionAdd_New_Operating_Mode">
+   <property name="text">
+    <string>Add New Operating Mode</string>
+   </property>
+  </action>
+  <action name="actionManage_Operating_Mode">
+   <property name="text">
+    <string>Manage Operating Modes</string>
+   </property>
+  </action>
+  <action name="actionMode_Report">
+   <property name="text">
+    <string>Mode Report</string>
+   </property>
+  </action>
+  <action name="actionMode_Differences_Report">
+   <property name="text">
+    <string>Mode Differences Report</string>
+   </property>
+  </action>
+  <action name="actionDelete_All_Operating_Mode">
+   <property name="text">
+    <string>Delete All Operating Modes</string>
+   </property>
+  </action>
+  <action name="actionWhat_are_Operating_Modes">
+   <property name="text">
+    <string>What are Operating Modes?</string>
+   </property>
+  </action>
+  <action name="actionRun_Stage">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/runStage.png</normaloff>:/icons/images/runStage.png</iconset>
+   </property>
+   <property name="text">
+    <string>Run Stage</string>
+   </property>
+  </action>
+  <action name="actionRun_Plant">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/runPlant.png</normaloff>:/icons/images/runPlant.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Run Plant</string>
+   </property>
+  </action>
+  <action name="actionTurn_Off_All_Red_Flags">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/turnoffallredflag.png</normaloff>:/icons/images/turnoffallredflag.png</iconset>
+   </property>
+   <property name="text">
+    <string>Turn Off All Red Flags</string>
+   </property>
+  </action>
+  <action name="action_Open_Configuration_Advisor">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/openConfigurationAdvisor.png</normaloff>:/icons/images/openConfigurationAdvisor.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open Configuration Advisor</string>
+   </property>
+  </action>
+  <action name="action_Save_as_Master">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/save_as_master.png</normaloff>:/icons/images/save_as_master.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save as Master</string>
+   </property>
+  </action>
+  <action name="action_Open_Revision_From_File">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/open_revision_file.png</normaloff>:/icons/images/open_revision_file.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open Revision From File</string>
+   </property>
+  </action>
+  <action name="actionOpen_Control_Panel">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/open_control_panel.png</normaloff>:/icons/images/open_control_panel.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Control Panel</string>
+   </property>
+  </action>
+  <action name="actionManage_User_Access_To_This_Project">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/manage_user_access.png</normaloff>:/icons/images/manage_user_access.png</iconset>
+   </property>
+   <property name="text">
+    <string>Manage User Access To This Project</string>
+   </property>
+  </action>
+  <action name="actionPrint_this_Page">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/print_page.png</normaloff>:/icons/images/print_page.png</iconset>
+   </property>
+   <property name="text">
+    <string>Print this Page</string>
+   </property>
+  </action>
+  <action name="actionPrint_All_Page">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/print_all_page.png</normaloff>:/icons/images/print_all_page.png</iconset>
+   </property>
+   <property name="text">
+    <string>Print All Page...</string>
+   </property>
+  </action>
+  <action name="actionSet_Title_and_Print_Options_2">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/setTitle_print_option.png</normaloff>:/icons/images/setTitle_print_option.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set Title and Print Options</string>
+   </property>
+  </action>
+  <action name="actionSet_User_Preferences">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/setuser_preference.png</normaloff>:/icons/images/setuser_preference.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set User Preferences...</string>
+   </property>
+  </action>
+  <action name="action_Close_This_Project">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/close.png</normaloff>:/icons/images/close.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Close This Project</string>
+   </property>
+  </action>
+  <action name="actionSave_as_New">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/save_as_new_design.png</normaloff>:/icons/images/save_as_new_design.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save As New Design Project</string>
+   </property>
+  </action>
+  <action name="actionPage_to_PDF">
+   <property name="text">
+    <string>Page to PDF</string>
+   </property>
+  </action>
+  <action name="actionPage_to_EPS">
+   <property name="text">
+    <string>Page to EPS</string>
+   </property>
+  </action>
+  <action name="actionPage_with_Result_to_EPS">
+   <property name="text">
+    <string>Page with Result to EPS</string>
+   </property>
+  </action>
+  <action name="actionPage_to_JPEG">
+   <property name="text">
+    <string>Page to JPEG</string>
+   </property>
+  </action>
+  <action name="actionPage_to_TIFF_Color_big">
+   <property name="text">
+    <string>Page to TIFF Color(big)</string>
+   </property>
+  </action>
+  <action name="actionPage_to_TIFF_B_W_small">
+   <property name="text">
+    <string>Page to TIFF B/W (small)</string>
+   </property>
+  </action>
+  <action name="actionPlant_to_PDF">
+   <property name="text">
+    <string>Plant to PDF</string>
+   </property>
+  </action>
+  <action name="actionPlant_with_Result_to_PDF">
+   <property name="text">
+    <string>Plant with Result to PDF</string>
+   </property>
+  </action>
+  <action name="actionPlant_to_EPS">
+   <property name="text">
+    <string>Plant to EPS</string>
+   </property>
+  </action>
+  <action name="actionPlant_with_Result_to_EPS">
+   <property name="text">
+    <string>Plant with Result to EPS</string>
+   </property>
+  </action>
+  <action name="action_Graphical_Undo">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/graphicalundo.png</normaloff>:/icons/images/graphicalundo.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Graphical Undo</string>
+   </property>
+  </action>
+  <action name="action_Copy">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/copy.png</normaloff>:/icons/images/copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+  </action>
+  <action name="action_Cut">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/cut.png</normaloff>:/icons/images/cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cu&amp;t</string>
+   </property>
+  </action>
+  <action name="action_Paste">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/paste.png</normaloff>:/icons/images/paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+  </action>
+  <action name="action_Delete">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/delete.png</normaloff>:/icons/images/delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>De&amp;lete</string>
+   </property>
+  </action>
+  <action name="action_Select_All">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/selectall.png</normaloff>:/icons/images/selectall.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Select All</string>
+   </property>
+  </action>
+  <action name="action_Top">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/top.png</normaloff>:/icons/images/top.png</iconset>
+   </property>
+   <property name="text">
+    <string>Top</string>
+   </property>
+  </action>
+  <action name="action_Bottom">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/bottom.png</normaloff>:/icons/images/bottom.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bottom</string>
+   </property>
+  </action>
+  <action name="action_Left">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/left.png</normaloff>:/icons/images/left.png</iconset>
+   </property>
+   <property name="text">
+    <string>Left</string>
+   </property>
+  </action>
+  <action name="action_Right">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/right.png</normaloff>:/icons/images/right.png</iconset>
+   </property>
+   <property name="text">
+    <string>Right</string>
+   </property>
+  </action>
+  <action name="actionVertical_by_Center">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/verticalbycenter.png</normaloff>:/icons/images/verticalbycenter.png</iconset>
+   </property>
+   <property name="text">
+    <string>Vertical by Center</string>
+   </property>
+  </action>
+  <action name="actionHorizontal_by_Center">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/horizontalbycenter.png</normaloff>:/icons/images/horizontalbycenter.png</iconset>
+   </property>
+   <property name="text">
+    <string>Horizontal by Center</string>
+   </property>
+  </action>
+  <action name="action_Refresh">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/refresh.png</normaloff>:/icons/images/refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Refresh</string>
+   </property>
+  </action>
+  <action name="actionZoom_In">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/zoomIn.png</normaloff>:/icons/images/zoomIn.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom &amp;In</string>
+   </property>
+  </action>
+  <action name="actionZoom_Out">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/zoomout.png</normaloff>:/icons/images/zoomout.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom &amp;Out</string>
+   </property>
+  </action>
+  <action name="actionZoom_to_Normal">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/zoomnormal.png</normaloff>:/icons/images/zoomnormal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom to &amp;Normal</string>
+   </property>
+  </action>
+  <action name="actionZoom_to_Fit">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/zoom_to_fit.PNG</normaloff>:/icons/images/zoom_to_fit.PNG</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom to &amp;Fit</string>
+   </property>
+  </action>
+  <action name="actionDraw_O_rthogonal_Flow_Streams">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/draw_orthogonal.png</normaloff>:/icons/images/draw_orthogonal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Draw O&amp;rthogonal Flow Streams</string>
+   </property>
+  </action>
+  <action name="action_Metric">
+   <property name="text">
+    <string>Metric</string>
+   </property>
+  </action>
+  <action name="action_Imperial">
+   <property name="text">
+    <string>Imperial</string>
+   </property>
+  </action>
+  <action name="action_Display_Clean_Water_Equipment">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/displayCleanWater.png</normaloff>:/icons/images/displayCleanWater.png</iconset>
+   </property>
+   <property name="text">
+    <string>Display Clean Water Equipment</string>
+   </property>
+  </action>
+  <action name="action_Display_Toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/displayToolbar.png</normaloff>:/icons/images/displayToolbar.png</iconset>
+   </property>
+   <property name="text">
+    <string>Display Toolbar</string>
+   </property>
+  </action>
+  <action name="action_Display_Tool_Tips">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/images/displayToolbarTip.png</normaloff>:/icons/images/displayToolbarTip.png</iconset>
+   </property>
+   <property name="text">
+    <string>Display Tool Tips</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

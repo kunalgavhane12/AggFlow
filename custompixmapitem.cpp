@@ -28,7 +28,7 @@ CustomPixmapItem::CustomPixmapItem(const QPixmap &pixmap)
 {
     ItemId = ++GlobalItemId;
     setFlag(ItemIsMovable);
-    setFlag(ItemIsSelectable);
+    //    setFlag(ItemIsSelectable);
     setAcceptHoverEvents(true);
 
     PixmapLabel->setPixmap(pixmap);

@@ -15,7 +15,6 @@
 
 CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
-    , currentItem(nullptr)
     , scene(new QGraphicsScene(this))
     , currentLine(nullptr)
     , UndoStack(new QUndoStack(this))
@@ -23,9 +22,9 @@ CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     setScene(scene);
     setAcceptDrops(true);
     setRenderHints(QPainter::HighQualityAntialiasing);
-    scene->setSceneRect(0, 0,parent->width(),parent->height());
+    scene->setSceneRect(0, 0,600,400);
     setMouseTracking(true);
-    //    setFlag(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+
     acnSave = new QAction(tr("Save Not Yet Implemented"), this);
     acnDel = new QAction(tr("Delete line"), this);
     acnSetVal = new QAction(tr("Set value"), this);
@@ -101,7 +100,6 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent *event)
     }
 
     startPoint = scenePos;
-
     switch (currentMode) {
     case ArrowMode:
         currentItem = new QGraphicsLineItem(QLineF(startPoint, startPoint));
@@ -121,8 +119,7 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent *event)
         QGraphicsView::mousePressEvent(event);
         return;
     }
-    if (currentItem)
-    {
+    if (currentItem) {
         scene->addItem(currentItem);
     }
 
@@ -131,11 +128,6 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent *event)
 
 void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
-    if (!currentItem) {
-        QGraphicsView::mouseMoveEvent(event);
-        return;
-    }
-
     QPointF endPoint = mapToScene(event->pos());
 
     if (currentLine)
@@ -153,11 +145,11 @@ void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
         }
         break;
     }
-    case EllipseMode:{
-        QGraphicsEllipseItem *ellips = qgraphicsitem_cast<QGraphicsEllipseItem *>(currentItem);
-        if (ellips) {
-            QRectF rectF(startPoint, endPoint);
-            ellips->setRect(rectF);
+    case EllipseMode: {
+        QGraphicsEllipseItem *ellipse = qgraphicsitem_cast<QGraphicsEllipseItem *>(currentItem);
+        if (ellipse) {
+            QRectF rect(startPoint, endPoint);
+            ellipse->setRect(rect.normalized());
         }
         break;
     }
@@ -165,7 +157,7 @@ void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
         QGraphicsRectItem *rect = qgraphicsitem_cast<QGraphicsRectItem *>(currentItem);
         if (rect) {
             QRectF rectF(startPoint, endPoint);
-            rect->setRect(rectF);
+            rect->setRect(rectF.normalized());
         }
         break;
     }
@@ -182,15 +174,15 @@ void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
 
 void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 {
-    QPointF scenePos = mapToScene(event->pos());
     if (currentLine)
     {
         lineConnections[currentLine].first->parentItem()->setFlag(QGraphicsItem::ItemIsMovable, true);
+
         QPointF scenePos = mapToScene(event->pos());
         QList<QGraphicsItem *>items = scene->items(scenePos);
 
         bool lineDrawn = false;
-        for(auto item: items)
+        for(auto item:items)
         {
             auto test = dynamic_cast<QGraphicsEllipseItem *>(item);
             if (item && test)
@@ -218,17 +210,18 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 
         currentLine = nullptr;
     }
-    else if(currentItem)
+    else if (currentItem)
     {
+        currentMode = None;
         currentItem->setFlag(QGraphicsItem::ItemIsMovable, true);
         currentItem->setFlag(QGraphicsItem::ItemIsSelectable, true);
         currentItem = nullptr;
-        currentMode = None;
     }
     else
     {
+        QPointF scenePos = mapToScene(event->pos());
         QList<QGraphicsItem *>items = scene->items(scenePos);
-        for(QGraphicsItem *itm: items)
+        for(QGraphicsItem *itm:items)
         {
             CustomPixmapItem *cpItm = dynamic_cast<CustomPixmapItem *>(itm);
             if(cpItm)
@@ -242,9 +235,6 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 
     QGraphicsView::mouseReleaseEvent(event);
 }
-
-
-
 
 void CustomGraphicsView::mouseDoubleClickEvent(QMouseEvent *event)
 {
