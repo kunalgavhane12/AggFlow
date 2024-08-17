@@ -7,12 +7,22 @@
 #include <QPointF>
 #include <QMap>
 #include <QPolygonF>
+#include <QPainterPath>
 #include "CustomPixmapItem.h"
-#include <arrowlineitem.h>
+#include "arrowlineitem.h"
 #include <QMenu>
 #include <QAction>
 #include <QContextMenuEvent>
 #include <QUndoStack>
+#include <QMessageBox>
+#include <QIcon>
+#include <QInputDialog>
+#include <addcommand.h>
+#include <QDebug>
+#include <QApplication>
+#include <QDomDocument>
+#include <QBuffer>
+#include "resizablerectitem.h"
 
 using LineConnectionsMap = QMap<QGraphicsLineItem *, QPair<QGraphicsEllipseItem *, QGraphicsEllipseItem *>>;
 
@@ -22,14 +32,18 @@ class CustomGraphicsView : public QGraphicsView
 public:
     CustomGraphicsView(QWidget *parent = nullptr);
     void ClearScene();
+    void setFixedSizeAndScene(const QSize& size);
+
     enum DrawingMode {
         None,
         ArrowMode,
         LineMode,
         PolylineMode,
         EllipseMode,
-        RectangleMode
+        RectangleMode,
+        ResizeMode
     };
+
     void setDrawingMode(DrawingMode mode) {
         currentMode = mode;
         if (currentItem) {
@@ -38,6 +52,12 @@ public:
             currentItem = nullptr;
         }
     }
+
+    void startDrawing(const QPointF &scenePos);
+    void handleProxyWidgetInteraction(const QPointF &scenePos, QGraphicsProxyWidget *proxyWidget);
+    void handleEllipseInteraction(const QPointF &scenePos, QGraphicsEllipseItem *ellipseItem);
+    void handleItemInteraction(const QPointF &scenePos, QGraphicsItem *item);
+    void handleResizeMode(const QPointF &scenePos, QGraphicsItem *item);
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;
@@ -48,6 +68,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void contextMenuEvent(QContextMenuEvent *event) override;
     virtual void wheelEvent(QWheelEvent *event)override;
+    void resizeEvent(QResizeEvent *event) override;
 
 signals:
     void UndoTriggered();
@@ -60,7 +81,6 @@ signals:
 
 private slots:
     void updateLinePosition();
-    void onActionSave();
     void onSetValue();
 
 public slots:
@@ -78,21 +98,24 @@ private:
     void EmitDebugData(QPoint pos);
     void AddItemToAddStack(QGraphicsItem *item);
     void AddItemToMoveStack(QGraphicsItem *item);
-    DrawingMode currentMode;
-    QPointF startPoint;
-    QGraphicsItem *currentItem;
-    QGraphicsScene *scene;
-    ArrowLineItem *currentLine;
-    QPointF lineStartPoint;
+
     LineConnectionsMap lineConnections;
+    QGraphicsScene *scene;
+    QGraphicsItem *currentItem = nullptr;
+    QGraphicsItem *selectedItem = nullptr;
+    ArrowLineItem *currentLine = nullptr;
+    QPointF startPoint;
+    QPointF lineStartPoint;
+    QPointF itemStartPosition;
     QMenu contextMenu;
-    QAction *acnSave;
     QAction *acnDel;
     QAction *acnSetVal;
     QAction *acnResult;
-    QGraphicsItem *selectedItem = nullptr;
-    QPointF itemStartPosition;
     QUndoStack* UndoStack;
+    DrawingMode currentMode;
+private:
+    ResizableRectItem *resizingItem = nullptr;
+
 };
 
 #endif // CUSTOMGRAPHICSVIEW_H

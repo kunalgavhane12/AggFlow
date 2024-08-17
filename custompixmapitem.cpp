@@ -20,15 +20,15 @@ CustomPixmapItem::CustomPixmapItem(const QPixmap &pixmap)
     , TextLabel(new QLabel(DEFAULT_TEXT))
     , PixmapLabel(new QLabel)
     , ProxyWid(new QGraphicsProxyWidget)
-    , StartCircle (new QGraphicsEllipseItem(-10, -10, 10, 10, this))
-    , EndCircle (new QGraphicsEllipseItem(-10, -10, 10, 10, this))
+    , StartCircle (new QGraphicsEllipseItem(-5, -5, 10, 10, this))
+    , EndCircle (new QGraphicsEllipseItem(-5, -5, 10, 10, this))
     , ItemId(0)
     , IsStartConnected(false)
     , IsEndConnected(false)
 {
     ItemId = ++GlobalItemId;
     setFlag(ItemIsMovable);
-    //    setFlag(ItemIsSelectable);
+//    setFlag(ItemIsSelectable);
     setAcceptHoverEvents(true);
 
     PixmapLabel->setPixmap(pixmap);
