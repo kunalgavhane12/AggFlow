@@ -117,6 +117,7 @@ void MainWindow::SetupUI()
         button->setIcon(menuIcons[i]);
         button->setIconSize(QSize(35, 35));
         button->setFixedSize(40, 40);
+        button->setToolTip(menulabels[i]);
         connect(button, &QPushButton::clicked, [this, i]() { onItemClicked(i); });
         groupBoxLayout->addWidget(button, i, 0);
     }
@@ -199,10 +200,10 @@ void MainWindow::connectUI()
     connect(plantWithResultToEPS, &QAction::triggered, this, &MainWindow::exportPlantWithResultToEPS);
 
     //Alignment
-//    connect(topAction, &QAction::triggered, this, &MainWindow::on_actionTop_triggered);
-//    connect(bottomAction, &QAction::triggered, this, &MainWindow::on_actionBottom_triggered);
-//    connect(leftAction, &QAction::triggered, this, &MainWindow::on_actionLeft_triggered);
-//    connect(rightAction, &QAction::triggered, this, &MainWindow::on_actionRight_triggered);
+    connect(topAction, &QAction::triggered, graphicsView, &CustomGraphicsView::onActionTopTriggered);
+    connect(bottomAction, &QAction::triggered, graphicsView, &CustomGraphicsView::onActionBottomTriggered);
+    connect(leftAction, &QAction::triggered, graphicsView, &CustomGraphicsView::onActionLeftTriggered);
+    connect(rightAction, &QAction::triggered, graphicsView , &CustomGraphicsView::onActionRightTriggered);
 
     //reportConnection triggered
     connect(createReportForSelectedItems, &QAction::triggered, this, &MainWindow::createReportSelectedItems);
@@ -263,6 +264,9 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/place_a_surge_bin_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/bucket_elevator.png"),
                      QIcon(":/icons/dragIcon/screw_conveyor.png")};
+        connect(listView, &QListView::clicked, [this](const QModelIndex &index) {
+            onTransportEquipment(index);
+        });
         break;
     case 3:
         menuIcons = {QIcon(":/icons/dragIcon/place_a_splitter_in_the_flow.png"),
@@ -797,23 +801,40 @@ void MainWindow::onDrawingModeSelected(int mode) {
         qDebug() << "adjustable text ";
         break;
     case 6:
-        graphicsView->setDrawingMode(CustomGraphicsView::ArrowMode);
+        graphicsView->setShapeType(CustomShapeItem::Arrow);
         break;
     case 7:
-        graphicsView->setDrawingMode(CustomGraphicsView::LineMode);
+        graphicsView->setShapeType(CustomShapeItem::Line);
         break;
     case 8:
-        graphicsView->setDrawingMode(CustomGraphicsView::PolylineMode);
+        graphicsView->setShapeType(CustomShapeItem::PolygonLine);
         break;
     case 9:
-        graphicsView->setDrawingMode(CustomGraphicsView::EllipseMode);
+        graphicsView->setShapeType(CustomShapeItem::Ellipse);
         break;
     case 10:
-        graphicsView->setDrawingMode(CustomGraphicsView::RectangleMode);
+        graphicsView->setShapeType(CustomShapeItem::Rectangle);
         break;
     default:
         listView->setDragEnabled(true);
         break;
+    }
+}
+
+void MainWindow::onTransportEquipment(const QModelIndex &index)
+{
+    switch (index.row())
+    {
+    case 0:
+        graphicsView->setShapeType(CustomShapeItem::ConvLine);
+        break;
+    case 1:
+        graphicsView->setShapeType(CustomShapeItem::ConvReverseLine);
+        break;
+    default:
+        listView->setDragEnabled(true);
+        break;
+
     }
 }
 
@@ -1235,64 +1256,3 @@ void MainWindow::setUserPreferences()
     UserPreferences *user = new UserPreferences();
     user->show();
 }
-
-void MainWindow::on_actionTop_triggered()
-{
-    qDebug()<<"top";
-    QList<QGraphicsItem*> allItems = graphicsView->items();
-    for (QGraphicsItem* item : qAsConst(allItems))
-    {
-        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
-        if (pixmapItem && pixmapItem->isSelected())
-        {
-            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
-            pixmapItem->setPos(pixmapItem->x(), 0);
-        }
-    }
-}
-
-void MainWindow::on_actionBottom_triggered()
-{
-    qDebug()<<"top";
-    QList<QGraphicsItem*> allItems = graphicsView->items();
-    for (QGraphicsItem* item : allItems)
-    {
-        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
-        if (pixmapItem && pixmapItem->isSelected())
-        {
-            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
-            pixmapItem->setPos(pixmapItem->x(), graphicsView->height() - pixmapItem->boundingRect().height());
-        }
-    }
-}
-
-void MainWindow::on_actionLeft_triggered()
-{
-    qDebug()<<"top";
-    QList<QGraphicsItem*> allItems = graphicsView->items();
-    for (QGraphicsItem* item : qAsConst(allItems))
-    {
-        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
-        if (pixmapItem && pixmapItem->isSelected())
-        {
-            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
-             pixmapItem->setPos(0, pixmapItem->y());
-        }
-    }
-}
-
-void MainWindow::on_actionRight_triggered()
-{
-    qDebug()<<"top";
-    QList<QGraphicsItem*> allItems = graphicsView->items();
-    for (QGraphicsItem* item : qAsConst(allItems))
-    {
-        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
-        if (pixmapItem && pixmapItem->isSelected())
-        {
-            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
-            pixmapItem->setPos(graphicsView->width() - pixmapItem->boundingRect().width(), pixmapItem->y());
-        }
-    }
-}
-

@@ -1,4 +1,4 @@
-QT       += core gui xml printsupport
+QT       += core gui charts xml printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     addcommand.cpp \
+    adjustfeedstream.cpp \
     arrowlineitem.cpp \
     customdelegate.cpp \
     customgraphicsview.cpp \
@@ -17,21 +18,21 @@ SOURCES += \
     customshapeitem.cpp \
     main.cpp \
     mainwindow.cpp \
-    resizablerectitem.cpp \
     userpreferences.cpp
 
 HEADERS += \
     addcommand.h \
+    adjustfeedstream.h \
     arrowlineitem.h \
     customdelegate.h \
     customgraphicsview.h \
     custompixmapitem.h \
     customshapeitem.h \
     mainwindow.h \
-    resizablerectitem.h \
     userpreferences.h
 
 FORMS += \
+    adjustfeedstream.ui \
     mainwindow.ui \
     userpreferences.ui
 

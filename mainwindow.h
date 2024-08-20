@@ -7,16 +7,13 @@
 #include <customdelegate.h>
 #include <QPushButton>
 #include <QDebug>
+#include "customshapeitem.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    enum Mode {
-        Normal,
-        Drawing
-    };
     MainWindow(QWidget *parent = nullptr);
 
 private slots:
@@ -56,14 +53,6 @@ private slots:
     void printAllContent();
     void setUserPreferences();
 
-    void on_actionTop_triggered();
-
-    void on_actionBottom_triggered();
-
-    void on_actionLeft_triggered();
-
-    void on_actionRight_triggered();
-
 private:
     void SetupUI();
     void connectUI();
@@ -74,6 +63,7 @@ private:
     void createToolbar();
     void setCurrentFile(const QString &fileName);
     void onDrawingModeSelected(int mode);
+    void onTransportEquipment(const QModelIndex &index);
 
     QWidget *centralWidget;
     QTabWidget *tabPlant;
@@ -172,7 +162,6 @@ private:
     QAction *about;
     QString currentFile;
     qreal zoomFactor;
-    Mode currentMode = Normal;
 };
 
 #endif // MAINWINDOW_H

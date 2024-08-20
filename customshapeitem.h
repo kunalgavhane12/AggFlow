@@ -8,7 +8,8 @@
 class CustomShapeItem : public QGraphicsItem
 {
 public:
-    enum ShapeType { Rectangle, Ellipse, Line, Arrow, FixedLine };
+    enum ShapeType { ConvLine, ConvReverseLine,Rectangle, Ellipse, Line, Arrow, PolygonLine };
+    enum HandleType { TopLeft, TopRight, BottomLeft, BottomRight};
 
     CustomShapeItem(ShapeType shapeType, QGraphicsItem *parent = nullptr);
 
@@ -20,8 +21,11 @@ public:
     void setShapeLine(const QLineF &line);
     ShapeType getShapeType() const;
 
-signals:
-
+    void updateHandles();
+    void addHandles();
+    void removeHandles();
+    HandleType handleAt(const QPointF &point) const;
+    void resizeShape(HandleType handleType, const QPointF &newPos);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -32,16 +36,7 @@ private:
     ShapeType shapeType;
     QRectF shapeRect;
     QLineF shapeLine;
-
-    enum HandleType { TopLeft, TopRight, BottomLeft, BottomRight, MiddleLeft, MiddleRight, TopCenter, BottomCenter };
     QVector<QGraphicsEllipseItem*> handles;
-
-    void updateHandles();
-    void addHandles();
-    void removeHandles();
-    HandleType handleAt(const QPointF &point) const;
-    void resizeShape(HandleType handleType, const QPointF &newPos);
 };
 
 #endif // CUSTOMSHAPEITEM_H
-

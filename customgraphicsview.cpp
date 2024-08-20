@@ -3,6 +3,7 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QDataStream>
+#include "adjustfeedstream.h"
 
 CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
@@ -75,22 +76,41 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent *event)
     QPointF scenePos = mapToScene(event->pos());
     QGraphicsItem *item = scene->itemAt(scenePos, QTransform());
 
-    if (item && dynamic_cast<ResizableRectItem *>(item))
-    {
-        qDebug() << "resize";
-        currentMode = ResizeMode;
-        resizingItem = dynamic_cast<ResizableRectItem *>(item);
-        resizingItem->startResizing(scenePos);
-        return;
-    }
-
     if (item && dynamic_cast<QGraphicsEllipseItem *>(item))
     {
         handleEllipseInteraction(scenePos, dynamic_cast<QGraphicsEllipseItem *>(item));
     }
-    else if (currentMode != ResizeMode)
+
+    if (drawing && event->button() == Qt::LeftButton)
     {
-        startDrawing(scenePos);
+        origin = scenePos;
+        currentItem1 = new CustomShapeItem(shapeType);
+        currentItem1->setFlag(QGraphicsItem::ItemIsMovable, false);
+        switch (shapeType)
+        {
+        case CustomShapeItem::ConvLine:
+            currentItem1->setShapeLine(QLineF(origin, origin));
+            break;
+        case CustomShapeItem::ConvReverseLine:
+            currentItem1->setShapeLine(QLineF(origin, origin));
+            break;
+        case CustomShapeItem::Rectangle:
+            currentItem1->setShapeRect(QRectF(origin, QSizeF(50, 50)));
+            break;
+        case CustomShapeItem::Ellipse:
+            currentItem1->setShapeRect(QRectF(origin, QSizeF(50, 50)));
+            break;
+        case CustomShapeItem::Line:
+            currentItem1->setShapeLine(QLineF(origin, origin));
+            break;
+        case CustomShapeItem::Arrow:
+            currentItem1->setShapeLine(QLineF(origin, origin));
+            break;
+        case CustomShapeItem::PolygonLine:
+            currentItem1->setShapeLine(QLineF(origin, origin));
+            break;
+        }
+        scene->addItem(currentItem1);
     }
 
     QGraphicsView::mousePressEvent(event);
@@ -105,32 +125,35 @@ void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
         QLineF newLine(lineStartPoint, endPoint);
         currentLine->setLine(newLine);
     }
-    else if (resizingItem)
+    if (drawing && currentItem1)
     {
-        resizingItem->resize(endPoint);
-        return;
-    }
-    else if (currentItem)
-    {
-        switch (currentMode)
+        QPointF currentPos = mapToScene(event->pos());
+        switch (shapeType)
         {
-        case ArrowMode:
-        case LineMode:
-            qgraphicsitem_cast<QGraphicsLineItem *>(currentItem)->setLine(QLineF(startPoint, endPoint));
+        case CustomShapeItem::ConvLine:
+            currentItem1->setShapeLine(QLineF(origin, currentPos));
             break;
-        case EllipseMode:
-            qgraphicsitem_cast<QGraphicsEllipseItem *>(currentItem)->setRect(QRectF(startPoint, endPoint).normalized());
+        case CustomShapeItem::ConvReverseLine:
+            currentItem1->setShapeLine(QLineF(origin, currentPos));
             break;
-        case RectangleMode:
-            qgraphicsitem_cast<QGraphicsRectItem *>(currentItem)->setRect(QRectF(startPoint, endPoint).normalized());
+        case CustomShapeItem::Rectangle:
+            currentItem1->setShapeRect(QRectF(origin, currentPos));
             break;
-        case PolylineMode:
+        case CustomShapeItem::Ellipse:
+            currentItem1->setShapeRect(QRectF(origin, currentPos));
             break;
-        default:
-            return;
+        case CustomShapeItem::Line:
+            currentItem1->setShapeLine(QLineF(origin, currentPos));
+            break;
+        case CustomShapeItem::PolygonLine:
+            currentItem1->setShapeLine(QLineF(origin, currentPos));
+            break;
+        case CustomShapeItem::Arrow:
+            currentItem1->setShapeLine(QLineF(origin, currentPos));
+            break;
         }
+        scene->update();
     }
-
     update();
     QGraphicsView::mouseMoveEvent(event);
 }
@@ -157,7 +180,6 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
                 break;
             }
         }
-
         if (!lineDrawn || (lineConnections[currentLine].first->parentItem() == lineConnections[currentLine].second->parentItem()))
         {
             scene->removeItem(currentLine);
@@ -170,12 +192,10 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
         }
         currentLine = nullptr;
     }
-    else if (currentItem)
-    {
-        currentMode = None;
-        currentItem->setFlag(QGraphicsItem::ItemIsMovable, true);
-        currentItem->setFlag(QGraphicsItem::ItemIsSelectable, true);
-        currentItem = nullptr;
+    else if (drawing && event->button() == Qt::LeftButton) {
+        drawing = false;
+        currentItem1->setFlag(QGraphicsItem::ItemIsMovable, true);
+        currentItem1 = nullptr;
     }
     else
     {
@@ -195,30 +215,10 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
     QGraphicsView::mouseReleaseEvent(event);
 }
 
-void CustomGraphicsView::startDrawing(const QPointF &scenePos)
+void CustomGraphicsView::setShapeType(CustomShapeItem::ShapeType shape)
 {
-    startPoint = scenePos;
-    switch (currentMode)
-    {
-    case ArrowMode:
-    case LineMode:
-        currentItem = new QGraphicsLineItem(QLineF(startPoint, startPoint));
-        break;
-    case EllipseMode:
-        currentItem = new QGraphicsEllipseItem(QRectF(startPoint, QSizeF(0, 0)));
-        break;
-    case RectangleMode:
-        currentItem = new QGraphicsRectItem(QRectF(startPoint, QSizeF(0, 0)));
-        break;
-    case PolylineMode:
-        break;
-    default:
-        return;
-    }
-    if (currentItem)
-    {
-        scene->addItem(currentItem);
-    }
+    shapeType = shape;
+    drawing = true;
 }
 
 void CustomGraphicsView::handleEllipseInteraction(const QPointF &scenePos, QGraphicsEllipseItem *ellipseItem)
@@ -233,6 +233,66 @@ void CustomGraphicsView::handleEllipseInteraction(const QPointF &scenePos, QGrap
         currentLine->SetStartCircle(ellipseItem);
         ellipseItem->parentItem()->setFlag(QGraphicsItem::ItemIsMovable, false);
         currentLine->SetStartCircleAttributes();
+    }
+}
+
+void CustomGraphicsView::onActionTopTriggered()
+{
+    qDebug()<<"top";
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : qAsConst(allItems))
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        if (pixmapItem && pixmapItem->isSelected())
+        {
+            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
+            pixmapItem->setPos(pixmapItem->x(), 0);
+        }
+    }
+}
+
+void CustomGraphicsView::onActionBottomTriggered()
+{
+    qDebug()<<"top";
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : allItems)
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        if (pixmapItem && pixmapItem->isSelected())
+        {
+            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
+            pixmapItem->setPos(pixmapItem->x(), scene->height() - pixmapItem->boundingRect().height());
+        }
+    }
+}
+
+void CustomGraphicsView::onActionLeftTriggered()
+{
+    qDebug()<<"top";
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : qAsConst(allItems))
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        if (pixmapItem && pixmapItem->isSelected())
+        {
+            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
+            pixmapItem->setPos(0, pixmapItem->y());
+        }
+    }
+}
+
+void CustomGraphicsView::onActionRightTriggered()
+{
+    qDebug()<<"top";
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : qAsConst(allItems))
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        if (pixmapItem && pixmapItem->isSelected())
+        {
+            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
+            pixmapItem->setPos(scene->width() - pixmapItem->boundingRect().width(), pixmapItem->y());
+        }
     }
 }
 
@@ -259,6 +319,9 @@ void CustomGraphicsView::mouseDoubleClickEvent(QMouseEvent *event)
         {
             contextMenu.addAction(acnSetVal);
             selectedItem = widget;
+
+            //            AdjustFeedStream *feedStream = new AdjustFeedStream();
+            //            feedStream->show();
         }
     }
     contextMenu.exec(event->globalPos());
@@ -372,6 +435,8 @@ void CustomGraphicsView::onSetValue()
     CustomPixmapItem* item = dynamic_cast<CustomPixmapItem *>(selectedItem);
     if(item)
     {
+        AdjustFeedStream *feedStream = new AdjustFeedStream();
+        feedStream->show();
         double value = QInputDialog::getDouble(this, "Enter Value:", "Operation:", 0, 0, 1000, 2, nullptr);
         item->SetText(QString::number(value));
     }

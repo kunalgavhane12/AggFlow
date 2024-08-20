@@ -22,7 +22,7 @@
 #include <QApplication>
 #include <QDomDocument>
 #include <QBuffer>
-#include "resizablerectitem.h"
+#include "customshapeitem.h"
 
 using LineConnectionsMap = QMap<QGraphicsLineItem *, QPair<QGraphicsEllipseItem *, QGraphicsEllipseItem *>>;
 
@@ -34,30 +34,11 @@ public:
     void ClearScene();
     void setFixedSizeAndScene(const QSize& size);
 
-    enum DrawingMode {
-        None,
-        ArrowMode,
-        LineMode,
-        PolylineMode,
-        EllipseMode,
-        RectangleMode,
-        ResizeMode
-    };
-
-    void setDrawingMode(DrawingMode mode) {
-        currentMode = mode;
-        if (currentItem) {
-            scene->removeItem(currentItem);
-            delete currentItem;
-            currentItem = nullptr;
-        }
-    }
-
-    void startDrawing(const QPointF &scenePos);
+    void setShapeType(CustomShapeItem::ShapeType shape);
     void handleProxyWidgetInteraction(const QPointF &scenePos, QGraphicsProxyWidget *proxyWidget);
     void handleEllipseInteraction(const QPointF &scenePos, QGraphicsEllipseItem *ellipseItem);
     void handleItemInteraction(const QPointF &scenePos, QGraphicsItem *item);
-    void handleResizeMode(const QPointF &scenePos, QGraphicsItem *item);
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;
@@ -90,6 +71,10 @@ public slots:
     void onResult();
     void saveToXml(const QString &fileName);
     void loadFromXml(const QString &fileName);
+    void onActionTopTriggered();
+    void onActionBottomTriggered();
+    void onActionLeftTriggered();
+    void onActionRightTriggered();
 
 private:
     void RemoveLines();
@@ -112,10 +97,11 @@ private:
     QAction *acnSetVal;
     QAction *acnResult;
     QUndoStack* UndoStack;
-    DrawingMode currentMode;
-private:
-    ResizableRectItem *resizingItem = nullptr;
 
+    CustomShapeItem *currentItem1 = nullptr;
+    bool drawing;
+    CustomShapeItem::ShapeType shapeType;
+    QPointF origin;
 };
 
 #endif // CUSTOMGRAPHICSVIEW_H
