@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     createMenus();
     createToolbar();
     connectUI();
-    graphicsView->setFixedSizeAndScene(QSize(600, 500));
+    graphicsView->setFixedSizeAndScene(QSize(800, 600));
 
     runAction = new QAction("Run", this);
     menuBar()->addAction(runAction);
@@ -125,7 +125,9 @@ void MainWindow::SetupUI()
     groupBoxLayout->addStretch(1);
 
     IconListModel *model = new IconListModel(this);
-    QStringList labels = {"Item 0", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
+    QStringList labels = {"start_points_loader", "start_points_dump_truck", "start_points_excavator",
+                          "start_points_bull_dozer", "start_points_dredge", "start_points_generic_material_source",
+                          "start_points_start_sugar_pile"};
     QList<QIcon> icons;
     icons = {QIcon(":/icons/dragIcon/start_points_loader.png"),
              QIcon(":/icons/dragIcon/start_points_dump_truck.png"),
@@ -238,6 +240,10 @@ void MainWindow::onItemClicked(int index)
 
     switch (index) {
     case 0:
+        labels = QStringList {"start_points_loader", "start_points_dump_truck", "start_points_excavator",
+                "start_points_bull_dozer", "start_points_dredge", "start_points_generic_material_source",
+                "start_points_start_sugar_pile"
+    };
         menuIcons = {QIcon(":/icons/dragIcon/start_points_loader.png"),
                      QIcon(":/icons/dragIcon/start_points_dump_truck.png"),
                      QIcon(":/icons/dragIcon/start_points_excavator.png"),
@@ -247,6 +253,9 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/start_points_start_suger_pile.png")};
         break;
     case 1:
+        labels = QStringList {"apron_feeder", "feeder", "belt_feeder", "suger_bin","pan_feeder",
+                "suger_bin_with_feeder", "dust_collector" };
+
         menuIcons = {QIcon(":/icons/dragIcon/apron_feeder.png"),
                      QIcon(":/icons/dragIcon/feeder.png"),
                      QIcon(":/icons/dragIcon/belt_feeder.png"),
@@ -256,6 +265,11 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/dust_collector.png")};
         break;
     case 2:
+        labels = QStringList {"place_a_conveyor_in_the_flow", "place_a_reversible_conveyor_in_the_flow",
+                "place_a_haul_truck_in_the_flow", "place_a_front_end_loader_in_the_flow",
+                "place_a_front_end_loader_in_the_flow","place_a_surge_bin_in_the_flow",
+                "bucket_elevator", "screw_conveyor" };
+
         menuIcons = {QIcon(":/icons/dragIcon/place_a_conveyor_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/place_a_reversible_conveyor_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/place_a_haul_truck_in_the_flow.png"),
@@ -269,6 +283,10 @@ void MainWindow::onItemClicked(int index)
         });
         break;
     case 3:
+        labels = QStringList {"place_a_splitter_in_the_flow", "place_a_three_way_splitter_in_the_flow",
+                "place_a_flop_gate_in_the_flow","place_an_overflow_box_in_the_flow",
+                "place_a_finger_gate_in_the_flow"};
+
         menuIcons = {QIcon(":/icons/dragIcon/place_a_splitter_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/place_a_three_way_splitter_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/place_a_flop_gate_in_the_flow.png"),
@@ -276,6 +294,10 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/place_a_finger_gate_in_the_flow.png")};
         break;
     case 4:
+        labels = QStringList {"place_a_jaw_crusher_in_the_flow", "place_a_cone_crusher_in_the_flow",
+                "place_an_hsi_crusher_in_the_flow","place_a_vsi_crusher_in_the_flow",
+                "place_a_roll_crusher_in_the_flow", "place_a_mill_crusher_in_the_flow" };
+
         menuIcons = {QIcon(":/icons/dragIcon/place_a_jaw_crusher_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/place_a_cone_crusher_in_the_flow.png"),
                      QIcon(":/icons/dragIcon/place_an_hsi_crusher_in_the_flow.png"),
@@ -284,6 +306,10 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/place_a_mill_crusher_in_the_flow.png")};
         break;
     case 5:
+        labels = QStringList {"grizzly_feeder_vibrating_scalper", "1deck", "2deck", "3deck","4deck","5deck",
+                "place_a_custom_screen_in_the_flow_trommel_or_banana",
+                "place_a_custom_multi_screen_or_split_deck_screen_in_the_flow","air_seperator" };
+
         menuIcons = {QIcon(":/icons/dragIcon/grizzly_feeder_vibrating_scalper.png"),
                      QIcon(":/icons/dragIcon/1deck.png"),
                      QIcon(":/icons/dragIcon/2deck.png"),
@@ -295,6 +321,10 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/air_seperator.png")};
         break;
     case 6:
+        labels = QStringList {"place_a_mobile_jaw_on_the_worksheet", "place_a_mobile_cone_on_the_worksheet",
+                "place_a_mobile_hsi_on_the_worksheet","place_a_mobile_vsi_on_the_worksheet",
+                "place_a_mobile_screen_on_the_worksheet", "place_a_mobile_wash_unit_on_the_worksheet",
+                "place_a_mobile_conveyor_on_the_worksheet"};
         menuIcons = {QIcon(":/icons/dragIcon/place_a_mobile_jaw_on_the_worksheet.png"),
                      QIcon(":/icons/dragIcon/place_a_mobile_cone_on_the_worksheet.png"),
                      QIcon(":/icons/dragIcon/place_a_mobile_hsi_on_the_worksheet.png"),
@@ -304,6 +334,10 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/place_a_mobile_conveyor_on_the_worksheet.png")};
         break;
     case 7:
+        labels = QStringList {"scrubbing_and_attrition_equipment", "classification_equipment",
+                "sand_washing_dewatering","place_an_overflow_box_in_the_flow","mixing_box",
+                "place_a_slurry_box_in_the_flow", "slurry_pump", "slurry_valve",
+                "water_treatment_or_recycling_recover_water" };
         menuIcons = {QIcon(":/icons/dragIcon/scrubbing_and_attrition_equipment.png"),
                      QIcon(":/icons/dragIcon/classification_equipment.png"),
                      QIcon(":/icons/dragIcon/sand_washing_dewatering.png"),
@@ -315,10 +349,14 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/water_treatment_or_recycling_recover_water.png")};
         break;
     case 8:
+        labels = QStringList {"inventory_suger_pile_with_feeders", "inventory_suger_bin_with_feeders"};
         menuIcons = {QIcon(":/icons/dragIcon/inventory_suger_pile_with_feeders.png"),
                      QIcon(":/icons/dragIcon/inventory_suger_bin_with_feeders.png")};
         break;
     case 9:
+        labels = QStringList {"end_point_product_pile", "end_point_haul_truck",
+                "end_point_haul_railway_transport","end_point_haul_water_transport",
+                "end_point_product_bin", "end_point_blending_station" };
         menuIcons = {QIcon(":/icons/dragIcon/end_point_product_pile.png"),
                      QIcon(":/icons/dragIcon/end_point_haul_truck.png"),
                      QIcon(":/icons/dragIcon/end_point_haul_railway_transport.png"),
@@ -327,6 +365,8 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/end_point_blending_station.png")};
         break;
     case 10:
+        labels = QStringList {"clean_water_source", "clean_Watersource", "water_pump","water_splitter",
+                "waterSplitter", "water_tank", "water_valve", "water_spray_nozzles" };
         menuIcons = {QIcon(":/icons/dragIcon/clean_water_source.png"),
                      QIcon(":/icons/dragIcon/clean_Watersource.png"),
                      QIcon(":/icons/dragIcon/water_pump.png"),
@@ -337,15 +377,22 @@ void MainWindow::onItemClicked(int index)
                      QIcon(":/icons/dragIcon/water_spray_nozzles.png")};
         break;
     case 11:
+        labels = QStringList {"sample_bucket" };
         menuIcons = {QIcon(":/icons/dragIcon/sample_bucket.png")};
         break;
     case 12:
+        labels = QStringList {"external_power_source", "internal_power_source", "fuel_tank","personnel"};
+
         menuIcons = {QIcon(":/icons/dragIcon/external_power_source.png"),
                      QIcon(":/icons/dragIcon/internal_power_source.png"),
                      QIcon(":/icons/dragIcon/fuel_tank.png"),
                      QIcon(":/icons/dragIcon/personnel.png")};
         break;
     case 13:
+        labels = QStringList {"reset_to_pointer_default_mouse_function", "paint_brush",
+                "select_color_for_paint_brush","erase_color", "multi_line_notes",
+                "adjustable_text", "arrow", "line", "polyline", "ellipse", "rectangle",
+                "symbols_open_to_select_model"};
         menuIcons = {QIcon(":/icons/dragIcon/reset_to_pointer_default_mouse_function.png"),
                      QIcon(":/icons/dragIcon/paint_brush.png"),
                      QIcon(":/icons/dragIcon/select_color_for_paint_brush.png"),
@@ -367,10 +414,10 @@ void MainWindow::onItemClicked(int index)
         break;
     }
 
-    for (int i = 0 ; i<menuIcons.size(); i++ )
-    {
-        labels.append("Item " + QString::number(i));
-    }
+//    for (int i = 0 ; i<menuIcons.size(); i++ )
+//    {
+//        labels.append("Item " + QString::number(i));
+//    }
 
     menuModel->setData(labels, menuIcons);
     listView->setModel(menuModel);
@@ -935,7 +982,7 @@ void MainWindow::addNewPlantTab(int index)
         tabPlant->setCurrentIndex(tabPlant->count() - 2);
 
         CustomGraphicsView *newGraphicsView = new CustomGraphicsView(this);
-        newGraphicsView->setFixedSizeAndScene(QSize(600, 500));  // Set fixed size
+        newGraphicsView->setFixedSizeAndScene(QSize(800, 600));  // Set fixed size
         newPageTabWidget->addTab(newGraphicsView, "Page #1");
         newPageTabWidget->addTab(new QWidget(this), "+ Page");
         newPageTabWidget->setTabsClosable(true);
@@ -946,7 +993,7 @@ void MainWindow::addNewPageTab(int index)
 {
     if (index == tabPage->count() - 1) {
         CustomGraphicsView *newGraphicsView = new CustomGraphicsView(this);
-        newGraphicsView->setFixedSizeAndScene(QSize(600, 500));  // Set fixed size
+        newGraphicsView->setFixedSizeAndScene(QSize(800, 600));  // Set fixed size
         tabPage->insertTab(tabPage->count() - 1, newGraphicsView, tr("Page #%1").arg(tabPage->count()));
         tabPage->setCurrentIndex(tabPage->count() - 2);
     }

@@ -12,7 +12,7 @@ class CustomPixmapItem : public QObject, public QGraphicsItemGroup
     Q_OBJECT
 public:
     static int GlobalItemId;
-    CustomPixmapItem(const QPixmap &pixmap);
+    CustomPixmapItem(const QPixmap &pixmap, QString name);
     void SetText(const QString &text);
     QString GetText() const;
     void write(QDataStream &out) const;
@@ -26,6 +26,7 @@ public:
     void SetItemId(int itemId);
     int GetItemId();
     void HideLabelIfNeeded();
+    QString GetItemName(){return itemName;}
 
     int pixmapWidth() const { return PixmapLabel->pixmap()->width(); }
     int pixmapHeight() const { return PixmapLabel->pixmap()->height(); }
@@ -56,6 +57,8 @@ private:
     int ItemId;
     bool IsStartConnected;
     bool IsEndConnected;
+    //add name
+    QString itemName;
 };
 
 #endif // CUSTOMPIXMAPITEM_H

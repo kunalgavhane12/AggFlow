@@ -1,4 +1,5 @@
 #include "customshapeitem.h"
+#include "resizehandle.h"  // Include the header for ResizeHandle
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
@@ -9,13 +10,14 @@ CustomShapeItem::CustomShapeItem(ShapeType shapeType, QGraphicsItem *parent)
     : QGraphicsItem(parent), shapeType(shapeType)
 {
     setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemSendsGeometryChanges);
+    addHandles();
 }
 
 QRectF CustomShapeItem::boundingRect() const
 {
     if (shapeType == Line || shapeType == Arrow)
     {
-        return QRectF(shapeLine.p1(), shapeLine.p2());
+        return QRectF(shapeLine.p1(), shapeLine.p2()).normalized();
     }
     else
     {
@@ -29,10 +31,8 @@ QPainterPath CustomShapeItem::shape() const
     switch (shapeType)
     {
     case ConvLine:
-        path.moveTo(shapeLine.p1());
-        path.lineTo(shapeLine.p2());
-        break;
     case ConvReverseLine:
+    case Line:
         path.moveTo(shapeLine.p1());
         path.lineTo(shapeLine.p2());
         break;
@@ -42,18 +42,26 @@ QPainterPath CustomShapeItem::shape() const
     case Ellipse:
         path.addEllipse(shapeRect);
         break;
-    case Line:
-        path.moveTo(shapeLine.p1());
-        path.lineTo(shapeLine.p2());
+    case Arrow:
+        {
+            QLineF line(shapeLine);
+            path.moveTo(line.p1());
+            path.lineTo(line.p2());
+
+            double angle = std::atan2(-line.dy(), line.dx());
+            QPointF arrowP1 = line.p2() - QPointF(sin(angle + M_PI / 3) * 10, cos(angle + M_PI / 3) * 10);
+            QPointF arrowP2 = line.p2() - QPointF(sin(angle + M_PI - M_PI / 3) * 10, cos(angle + M_PI - M_PI / 3) * 10);
+
+            QPolygonF arrowHead;
+            arrowHead << line.p2() << arrowP1 << arrowP2;
+
+            path.addPolygon(arrowHead);
+        }
         break;
     case PolygonLine:
         path.moveTo(shapeLine.p1());
         path.lineTo(shapeLine.p2());
         break;
-    case Arrow:
-        path.moveTo(shapeLine.p1());
-        path.lineTo(shapeLine.p2());
-       break;
     }
     return path;
 }
@@ -88,22 +96,21 @@ void CustomShapeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         painter->drawEllipse(shapeRect);
         break;
     case Arrow:
-    {
-        QLineF line(shapeLine);
-        painter->drawLine(line);
+        {
+            QLineF line(shapeLine);
+            painter->drawLine(line);
 
-        double angle = std::atan2(-line.dy(), line.dx());
+            double angle = std::atan2(-line.dy(), line.dx());
+            QPointF arrowP1 = line.p2() - QPointF(sin(angle + M_PI / 3) * 10, cos(angle + M_PI / 3) * 10);
+            QPointF arrowP2 = line.p2() - QPointF(sin(angle + M_PI - M_PI / 3) * 10, cos(angle + M_PI - M_PI / 3) * 10);
 
-        QPointF arrowP1 = line.p2() - QPointF(sin(angle + M_PI / 3) * 10, cos(angle + M_PI / 3) * 10);
-        QPointF arrowP2 = line.p2() - QPointF(sin(angle + M_PI - M_PI / 3) * 10, cos(angle + M_PI - M_PI / 3) * 10);
+            QPolygonF arrowHead;
+            arrowHead << line.p2() << arrowP1 << arrowP2;
 
-        QPolygonF arrowHead;
-        arrowHead << line.p2() << arrowP1 << arrowP2;
-
-        painter->setBrush(Qt::black);
-        painter->drawPolygon(arrowHead);
+            painter->setBrush(Qt::black);
+            painter->drawPolygon(arrowHead);
+        }
         break;
-    }
     case PolygonLine:
         painter->drawLine(shapeLine.p1(), shapeLine.p2());
         break;
@@ -114,11 +121,6 @@ void CustomShapeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         painter->setBrush(Qt::NoBrush);
         painter->setPen(QPen(Qt::blue, 2, Qt::DashLine));
         painter->drawRect(boundingRect());
-        addHandles();
-    }
-    else
-    {
-        removeHandles();
     }
 }
 
@@ -126,6 +128,7 @@ void CustomShapeItem::setShapeRect(const QRectF &rect)
 {
     prepareGeometryChange();
     shapeRect = rect;
+    updateHandles();
     update();
 }
 
@@ -138,6 +141,7 @@ void CustomShapeItem::setShapeLine(const QLineF &line)
 {
     prepareGeometryChange();
     shapeLine = line;
+    updateHandles();
     update();
 }
 
@@ -145,11 +149,18 @@ QLineF CustomShapeItem::getShapeLine() const
 {
     return shapeLine;
 }
+
 void CustomShapeItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
         QGraphicsItem::mousePressEvent(event);
+        // Handle the case where the user is clicking on a handle
+//        HandleType handle = handleAt(event->pos());
+//        if (handle != TopLeft)
+//        {
+//            m_currentHandle = handle;
+//        }
     }
 }
 
@@ -157,7 +168,14 @@ void CustomShapeItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton)
     {
-        QGraphicsItem::mouseMoveEvent(event);
+//        if (m_currentHandle != TopLeft)
+//        {
+//            resizeShape(m_currentHandle, event->scenePos());
+//        }
+//        else
+        {
+            QGraphicsItem::mouseMoveEvent(event);
+        }
     }
 }
 
@@ -165,26 +183,37 @@ void CustomShapeItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
+        m_currentHandle = TopLeft;
         QGraphicsItem::mouseReleaseEvent(event);
     }
 }
 
 void CustomShapeItem::addHandles()
 {
-    removeHandles();
+//    removeHandles();
+//    handles.clear();
+
     if (shapeType == Rectangle || shapeType == Ellipse)
     {
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
+        // Create ResizeHandle objects instead of QGraphicsEllipseItem
+//        for (int i = 0; i < 4; ++i)
+//        {
+//            ResizeHandle *handle = new ResizeHandle(this);
+//            handles.append(handle);
+//            handle->setResizeItem(this);
+//        }
     }
-    else if (shapeType == Line)
+    else if (shapeType == Line || shapeType == ConvLine || shapeType == ConvReverseLine)
     {
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
+        // Create ResizeHandle objects instead of QGraphicsEllipseItem
+//        for (int i = 0; i < 2; ++i)
+//        {
+//            ResizeHandle *handle = new ResizeHandle(this);
+//            handles.append(handle);
+//            handle->setResizeItem(this);
+//        }
     }
-    updateHandles();
+//    updateHandles();
 }
 
 void CustomShapeItem::removeHandles()
@@ -197,7 +226,7 @@ void CustomShapeItem::updateHandles()
 {
     for (int i = 0; i < handles.size(); ++i)
     {
-        QGraphicsEllipseItem *handle = handles[i];
+        ResizeHandle *handle = handles[i];
         if (shapeType == Rectangle || shapeType == Ellipse)
         {
             switch (i)
@@ -228,10 +257,8 @@ void CustomShapeItem::updateHandles()
 
 CustomShapeItem::HandleType CustomShapeItem::handleAt(const QPointF &point) const
 {
-    qDebug()<<"handleAt";
     for (int i = 0; i < handles.size(); ++i)
     {
-        qDebug()<<"handleAt...";
         if (handles[i]->contains(point))
             return static_cast<HandleType>(i);
     }
@@ -260,7 +287,7 @@ void CustomShapeItem::resizeShape(HandleType handleType, const QPointF &newPos)
             break;
         }
     }
-    else if (shapeType == Line)
+    else if (shapeType == Line || shapeType == ConvLine || shapeType == ConvReverseLine)
     {
         if (handleType == TopLeft)
             shapeLine.setP1(newPos);
@@ -268,6 +295,6 @@ void CustomShapeItem::resizeShape(HandleType handleType, const QPointF &newPos)
             shapeLine.setP2(newPos);
     }
 
-    update();
     updateHandles();
+    update();
 }

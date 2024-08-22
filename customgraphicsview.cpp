@@ -4,6 +4,9 @@
 #include <QMimeData>
 #include <QDataStream>
 #include "adjustfeedstream.h"
+#include "ui_adjustfeedstream.h"
+#include "adjustfeeder.h"
+#include "conveyorcalculation.h"
 
 CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
@@ -14,14 +17,15 @@ CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     setScene(scene);
     setAcceptDrops(true);
     setRenderHints(QPainter::HighQualityAntialiasing);
-    setDragMode(QGraphicsView::RubberBandDrag);
-    setFixedSizeAndScene(QSize(600, 500));
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setDragMode(QGraphicsView::ScrollHandDrag);
+    setFixedSizeAndScene(QSize(800, 600));
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     //    scene->setSceneRect(0, 0,600,400);
     setMouseTracking(true);
 
     acnDel = new QAction(tr("Delete line"), this);
+    acnDel->setShortcuts(QKeySequence::Delete);
     acnSetVal = new QAction(tr("Set value"), this);
 
     connect(acnDel, &QAction::triggered, this, &CustomGraphicsView::onActionDelete);
@@ -58,10 +62,12 @@ void CustomGraphicsView::dropEvent(QDropEvent *event)
         stream >> row >> col >> roleDataMap;
 
         QIcon icon = qvariant_cast<QIcon>(roleDataMap[Qt::UserRole + 1]);
+        QString itemName = qvariant_cast<QString>(roleDataMap[(Qt::ToolTipRole)]);
         QPixmap pixmap = icon.pixmap(64, 64);
-        CustomPixmapItem* item = new CustomPixmapItem(pixmap);
+        CustomPixmapItem* item = new CustomPixmapItem(pixmap, itemName);
         item->setPos(mapToScene(event->pos()));
         scene->addItem(item);
+        qDebug() << "IN Custom graphic Name: " <<itemName;
         connect(item, &CustomPixmapItem::positionChanged, this, &CustomGraphicsView::updateLinePosition);
 
         EmitDebugData(event->pos());
@@ -319,9 +325,6 @@ void CustomGraphicsView::mouseDoubleClickEvent(QMouseEvent *event)
         {
             contextMenu.addAction(acnSetVal);
             selectedItem = widget;
-
-            //            AdjustFeedStream *feedStream = new AdjustFeedStream();
-            //            feedStream->show();
         }
     }
     contextMenu.exec(event->globalPos());
@@ -435,10 +438,32 @@ void CustomGraphicsView::onSetValue()
     CustomPixmapItem* item = dynamic_cast<CustomPixmapItem *>(selectedItem);
     if(item)
     {
-        AdjustFeedStream *feedStream = new AdjustFeedStream();
-        feedStream->show();
-        double value = QInputDialog::getDouble(this, "Enter Value:", "Operation:", 0, 0, 1000, 2, nullptr);
-        item->SetText(QString::number(value));
+        if("start_points_loader" == item->GetItemName())
+        {
+            AdjustFeedStream *feedStream = new AdjustFeedStream();
+            feedStream->show();
+        }
+        else if ("start_points_start_sugar_pile" == item->GetItemName())
+        {
+            AdjustFeedStream *feedStream = new AdjustFeedStream();
+            feedStream->setWindowTitle("Adjust Feed Stream For Multiple Outputs");
+            feedStream->on_clear();
+            feedStream->show();
+        }
+        else if("apron_feeder" == item->GetItemName())
+        {
+            AdjustFeeder *feeder = new AdjustFeeder();
+            feeder->setWindowTitle(item->GetItemName());
+            feeder->show();
+        }
+        else if("place_a_conveyor_in_the_flow" == item->GetItemName())
+        {
+            ConveyorCalculation *conveyor = new ConveyorCalculation();
+            //           conveyor->setWindowTitle(item->GetItemName());
+            conveyor->show();
+        }
+        //        double value = QInputDialog::getDouble(this, "Enter Value:", "Operation:", 0, 0, 1000, 2, nullptr);
+        //        item->SetText(QString::number(value));
     }
 }
 
@@ -538,7 +563,7 @@ void CustomGraphicsView::loadFromFile(const QString &fileName)
         in >> itemType;
 
         if (itemType == "CustomPixmapItem") {
-            CustomPixmapItem *pixmapItem = new CustomPixmapItem(QPixmap());
+            CustomPixmapItem *pixmapItem = new CustomPixmapItem(QPixmap(),"");
             pixmapItem->read(in);
             pixmapItem->HideLabelIfNeeded();
             scene->addItem(pixmapItem);
@@ -615,7 +640,7 @@ void CustomGraphicsView::loadFromXml(const QString &fileName)
 
         if (token == QXmlStreamReader::StartElement) {
             if (xmlReader.name() == "CustomPixmapItem") {
-                CustomPixmapItem *pixmapItem = new CustomPixmapItem(QPixmap());
+                CustomPixmapItem *pixmapItem = new CustomPixmapItem(QPixmap(), "");
                 pixmapItem->loadFromXml(xmlReader);
                 pixmapItem->HideLabelIfNeeded();
                 scene->addItem(pixmapItem);

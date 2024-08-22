@@ -6,6 +6,7 @@
 #include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
 #include <QBuffer>
+#include <QDebug>
 
 namespace
 {
@@ -14,7 +15,7 @@ const char* DEFAULT_TEXT = "Text";
 
 int CustomPixmapItem::GlobalItemId = 0;
 
-CustomPixmapItem::CustomPixmapItem(const QPixmap &pixmap)
+CustomPixmapItem::CustomPixmapItem(const QPixmap &pixmap, QString name)
     : IsDraggingInProgress(false)
     , ContainerWidget(new QWidget)
     , TextLabel(new QLabel(DEFAULT_TEXT))
@@ -25,12 +26,13 @@ CustomPixmapItem::CustomPixmapItem(const QPixmap &pixmap)
     , ItemId(0)
     , IsStartConnected(false)
     , IsEndConnected(false)
+    , itemName(name)
 {
     ItemId = ++GlobalItemId;
     setFlag(ItemIsMovable);
 //    setFlag(ItemIsSelectable);
     setAcceptHoverEvents(true);
-
+    qDebug() << "IN Pixmap Constructor Name: " <<itemName;
     PixmapLabel->setPixmap(pixmap);
     AddEndCircles();
 }
@@ -275,7 +277,7 @@ int CustomPixmapItem::GetItemId()
     return ItemId;
 }
 
-void CustomPixmapItem::HideLabelIfNeeded()
+void CustomPixmapItem:: HideLabelIfNeeded()
 {
     if(TextLabel->text().compare(DEFAULT_TEXT) == 0)
     {

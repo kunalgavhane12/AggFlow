@@ -16,6 +16,7 @@ public:
     explicit AdjustFeedStream(QWidget *parent = nullptr);
     ~AdjustFeedStream();
 
+    void on_clear();
 private:
     Ui::AdjustFeedStream *ui;
 };
